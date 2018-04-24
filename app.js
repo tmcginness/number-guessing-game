@@ -3,7 +3,7 @@
 // player gets a certain number of guesses 
 // Notify player of guesses remaining
 // Notify player of the right number if they lose
-// let player choose to play again.
+// let player choose to play again
 
 // Game values
 let min = 1,
