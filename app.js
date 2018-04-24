@@ -31,7 +31,7 @@ game.addEventListener('mousedown', function (e) {
 })
 
 // Listen for guess
-guessBtn.addEventListener("click", function(){
+guessBtn.addEventListener("click", function click(){
     let guess = parseInt(guessInput.value);
 
      // Validate
@@ -49,13 +49,21 @@ guessBtn.addEventListener("click", function(){
             guessesLeft -= 1;
             guessInput.value = '';
             guessInput.style.borderColor = 'red';
-            setMessage(`${guess} is not correct. Guess lower! You have ${guessesLeft} guesses left.`, `red`)
+            setMessage(`${guess} is not correct. Guess Lower! You have ${guessesLeft} guesses left.`, `red`)
          }
         if(guessesLeft === 0){
             gameOver(false, `Game Over, you lost. The correct number was ${winningNum}.`)
         }
-     }
+    }
 );
+
+guessInput.addEventListener("keypress", function(e){
+    if(e.keyCode == 13){//Enter key pressed
+        guessBtn.click();//Trigger search button click event
+    }
+});
+
+
 
 // Game over
 function gameOver(won, msg){
