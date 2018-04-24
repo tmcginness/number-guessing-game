@@ -3,13 +3,13 @@
 // player gets a certain number of guesses 
 // Notify player of guesses remaining
 // Notify player of the right number if they lose
-// let player choose to play again
+// let player choose to play again.
 
 // Game values
 let min = 1,
-    max = 10,
+    max = 100,
     winningNum = getRandomNumber(min, max),
-    guessesLeft = 3;
+    guessesLeft = 7;
 
 // UI Elements
 const game = document.querySelector('#game'),
@@ -39,12 +39,17 @@ guessBtn.addEventListener("click", function(){
          setMessage(`Please enter a number between ${min} and ${max}`, 'red')
      } else if(guess === winningNum){
          gameOver(true, `${winningNum} is correct! YOU WIN!`)
-     } else {
+     } else if(guess < winningNum) {
     // Game continues - wrong number
         guessesLeft -= 1;
         guessInput.value = '';
         guessInput.style.borderColor = 'red';
-        setMessage(`${guess} is not correct. ${guessesLeft} guesses left.`, `red`)
+        setMessage(`${guess} is not correct. Guess Higher! You have ${guessesLeft} guesses left.`, `red`)
+         } else {
+            guessesLeft -= 1;
+            guessInput.value = '';
+            guessInput.style.borderColor = 'red';
+            setMessage(`${guess} is not correct. Guess lower! You have ${guessesLeft} guesses left.`, `red`)
          }
         if(guessesLeft === 0){
             gameOver(false, `Game Over, you lost. The correct number was ${winningNum}.`)
