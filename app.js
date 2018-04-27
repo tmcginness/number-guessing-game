@@ -11,6 +11,31 @@ let min = 1,
     winningNum = getRandomNumber(min, max),
     guessesLeft = 7;
 
+// Guess table constructor
+function uiGuess(guess, guessesLeft, highOrLow, winningNum){
+    this.guess = guess;
+    this.guessesLeft = guessesLeft;
+    this.highOrLow = highOrLow;
+    this.winningNum = winningNum;
+}
+
+// UI constructor
+function UI() {}
+
+// Add guess to table
+UI.prototype.addGuessToList = function(uiGuess){
+    const list = document.getElementById('guess-list');
+    // create row
+    const row = document.createElement('tr');
+    row.innerHTML=`
+        <td>${uiGuess.guess}</tr>
+        <td>${uiGuess.guessesLeft}</tr>
+        <td>${uiGuess.highOrLow}</tr>
+        <td>${uiGuess.winningNum}</tr>
+    `;
+    list.appendChild(row);
+}
+
 // UI Elements
 const game = document.querySelector('#game'),
     minNum = document.querySelector('.min-num'),
@@ -18,6 +43,7 @@ const game = document.querySelector('#game'),
     guessBtn = document.querySelector('#guess-btn'),
     guessInput = document.querySelector('#guess-input'),
     message = document.querySelector('.message');
+    uiGuessesLeft = document.querySelector('.number');
 
 // Assign UI Min and Max
 minNum.textContent = min;
@@ -39,17 +65,48 @@ guessBtn.addEventListener("click", function click(){
          setMessage(`Please enter a number between ${min} and ${max}`, 'red')
      } else if(guess === winningNum){
          gameOver(true, `${winningNum} is correct! YOU WIN!`)
+         setGuesses(` `, `black`)
+         highOrLow = 'Nailed It!';
+         // New guess
+         const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
+
+         // UI Object
+         const ui = new UI();
+         // add guess to list
+         ui.addGuessToList(newGuess);
      } else if(guess < winningNum) {
     // Game continues - wrong number
         guessesLeft -= 1;
+        let winningNum = '?';
+        highOrLow = 'Higher';
         guessInput.value = '';
         guessInput.style.borderColor = 'red';
         setMessage(`${guess} is not correct. Guess Higher! You have ${guessesLeft} guesses left.`, `red`)
+        setGuesses(`${guessesLeft}`, `black`)
+        // New book
+        const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
+
+        // UI Object
+        const ui = new UI();
+        // add guess to list
+        ui.addGuessToList(newGuess);
+
          } else {
             guessesLeft -= 1;
+            let winningNum = '?';
+            highOrLow = 'Lower';
             guessInput.value = '';
             guessInput.style.borderColor = 'red';
             setMessage(`${guess} is not correct. Guess Lower! You have ${guessesLeft} guesses left.`, `red`)
+            setGuesses(`${guessesLeft}`, `black`)
+            // New book
+            const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
+
+            // UI Object
+            const ui = new UI();
+            // add guess to list
+            ui.addGuessToList(newGuess);
+
          }
         if(guessesLeft === 0){
             gameOver(false, `Game Over, you lost. The correct number was ${winningNum}.`)
@@ -62,8 +119,6 @@ guessInput.addEventListener("keypress", function(e){
         guessBtn.click();//Trigger search button click event
     }
 });
-
-
 
 // Game over
 function gameOver(won, msg){
@@ -89,5 +144,11 @@ function getRandomNumber(min, max){
 function setMessage(msg, color){
     message.style.color = color;
     message.textContent = msg;
+}
+
+// Set guesses left
+function setGuesses(msg, color){
+    uiGuessesLeft.style.color = color;
+    uiGuessesLeft.textContent = msg;
 }
 
