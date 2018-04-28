@@ -67,13 +67,7 @@ guessBtn.addEventListener("click", function click(){
          gameOver(true, `${winningNum} is correct! YOU WIN!`)
          setGuesses(` `, `black`)
          highOrLow = 'Nailed It!';
-         // New guess
-         const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
-
-         // UI Object
-         const ui = new UI();
-         // add guess to list
-         ui.addGuessToList(newGuess);
+        logGuess(guess, guessesLeft, highOrLow, winningNum);
      } else if(guess < winningNum) {
     // Game continues - wrong number
         guessesLeft -= 1;
@@ -81,15 +75,9 @@ guessBtn.addEventListener("click", function click(){
         highOrLow = 'Higher';
         guessInput.value = '';
         guessInput.style.borderColor = 'red';
-        setMessage(`${guess} is not correct. Guess Higher! You have ${guessesLeft} guesses left.`, `red`)
+        setMessage(`${guess} is not correct. Guess Higher!`, `red`)
         setGuesses(`${guessesLeft}`, `black`)
-        // New book
-        const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
-
-        // UI Object
-        const ui = new UI();
-        // add guess to list
-        ui.addGuessToList(newGuess);
+        logGuess(guess, guessesLeft, highOrLow, winningNum);
 
          } else {
             guessesLeft -= 1;
@@ -97,15 +85,9 @@ guessBtn.addEventListener("click", function click(){
             highOrLow = 'Lower';
             guessInput.value = '';
             guessInput.style.borderColor = 'red';
-            setMessage(`${guess} is not correct. Guess Lower! You have ${guessesLeft} guesses left.`, `red`)
+            setMessage(`${guess} is not correct. Guess Lower!`, `red`)
             setGuesses(`${guessesLeft}`, `black`)
-            // New book
-            const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
-
-            // UI Object
-            const ui = new UI();
-            // add guess to list
-            ui.addGuessToList(newGuess);
+            logGuess(guess, guessesLeft, highOrLow, winningNum);
 
          }
         if(guessesLeft === 0){
@@ -152,3 +134,13 @@ function setGuesses(msg, color){
     uiGuessesLeft.textContent = msg;
 }
 
+// Add guesses to chart
+function logGuess(guess, guessesLeft, highOrLow, winningNum){
+    // New guess
+    const newGuess = new uiGuess(guess, guessesLeft, highOrLow, winningNum);
+
+    // UI Object
+    const ui = new UI();
+    // add guess to list
+    ui.addGuessToList(newGuess);
+}
