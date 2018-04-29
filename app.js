@@ -12,18 +12,20 @@ let min = 1,
     guessesLeft = 7;
 
 // Guess table constructor
-function uiGuess(guess, guessesLeft, highOrLow, winningNum){
+class uiGuess{
+    constructor(guess, guessesLeft, highOrLow, winningNum) {
     this.guess = guess;
     this.guessesLeft = guessesLeft;
     this.highOrLow = highOrLow;
     this.winningNum = winningNum;
+    }
 }
 
 // UI constructor
-function UI() {}
+class UI {
 
 // Add guess to table
-UI.prototype.addGuessToList = function(uiGuess){
+addGuessToList(uiGuess){
     const list = document.getElementById('guess-list');
     // create row
     const row = document.createElement('tr');
@@ -35,7 +37,7 @@ UI.prototype.addGuessToList = function(uiGuess){
     `;
     list.appendChild(row);
 }
-
+}
 // UI Elements
 const game = document.querySelector('#game'),
     minNum = document.querySelector('.min-num'),
