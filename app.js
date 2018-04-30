@@ -30,10 +30,10 @@ addGuessToList(uiGuess){
     // create row
     const row = document.createElement('tr');
     row.innerHTML=`
-        <td>${uiGuess.guess}</tr>
-        <td>${uiGuess.guessesLeft}</tr>
-        <td>${uiGuess.highOrLow}</tr>
-        <td>${uiGuess.winningNum}</tr>
+        <td>${uiGuess.guess}</td>
+        <td>${uiGuess.guessesLeft}</td>
+        <td>${uiGuess.highOrLow}</td>
+        <td>${uiGuess.winningNum}</td>
     `;
     list.appendChild(row);
 }
